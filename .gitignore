@@ -1,0 +1,3 @@
+target/
+.nsh/
+*.png.tmp
