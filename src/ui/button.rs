@@ -142,6 +142,11 @@ pub struct ButtonProps {
     pub disabled: Prop<bool>,
     /// What screen readers say in place of the label (an icon button's name).
     pub accessibility_label: Prop<Option<SharedString>>,
+    /// Content before the label in place of a Lucide `icon`: an app's own
+    /// icon (a brand's mark, a picture), which the app sizes (16 points
+    /// as the icon is, 12 in the extra small sizes). The button takes the
+    /// padding it takes with an icon.
+    pub leading: Prop<Option<Slot>>,
     /// Content after the label: an icon, a badge.
     pub children: Prop<Children>,
 }
@@ -162,7 +167,8 @@ pub fn Button(props: ButtonProps, cx: Scope<ButtonEvent>) -> impl IntoElement {
         .disabled(move || props.disabled.get())
         .cursor_pointer()
         .app_class(move || {
-            Some(button_classes(props.variant.get(), props.size.get(), props.icon.get().is_some()))
+            let has_icon = props.icon.get().is_some() || props.leading.get().is_some();
+            Some(button_classes(props.variant.get(), props.size.get(), has_icon))
         })
         .label(move || {
             props
@@ -179,6 +185,7 @@ pub fn Button(props: ButtonProps, cx: Scope<ButtonEvent>) -> impl IntoElement {
                     .into_element()
             })
         }))
+        .child(props.leading.place(|content| content))
         .child(dynamic(move || label.get().map(|label| text(label).into_element())))
         .child(props.children)
 }
