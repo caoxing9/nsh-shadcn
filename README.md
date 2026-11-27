@@ -9,7 +9,7 @@ It is an [nshm](https://nsh.dev/docs/nshm.md): one Rust crate that a Rust app ca
 runtime, with how to use it.
 
 > Status: every component of shadcn/ui's new-york-v4 registry except `form` (it is react-hook-form), each checked
-> against shadcn's own rendering in light and dark. See [DESIGN.md](DESIGN.md) for how a component is ported and
+> against shadcn's own rendering in light and dark. See [DESIGN.md](https://github.com/caoxing9/nsh-shadcn/blob/main/DESIGN.md) for how a component is ported and
 > verified, and each component's module doc for where NSH differs from the browser.
 
 ## In a Rust app
@@ -31,14 +31,9 @@ fn Toolbar() -> impl IntoElement {
 
 ## Install
 
-```toml
-# Cargo.toml of a Rust app
-[dependencies]
-nsh-shadcn = { git = "https://github.com/caoxing9/nsh-shadcn" }
-```
-
 ```sh
-nsh add github:caoxing9/nsh-shadcn   # any NSH app, TSX included
+cargo add nsh-shadcn   # a Rust app
+nsh add nsh-shadcn     # any NSH app, TSX included
 ```
 
 ## In a TSX app
@@ -73,4 +68,4 @@ that runs it live. It needs an LLVM with wasm32 support on `PATH` (macOS: `brew 
 
 ## License
 
-MIT. The components' class strings come from shadcn/ui (MIT, © shadcn); see [LICENSE](LICENSE).
+MIT. The components' class strings come from shadcn/ui (MIT, © shadcn); see [LICENSE](https://github.com/caoxing9/nsh-shadcn/blob/main/LICENSE).
