@@ -34,8 +34,8 @@ use crate::cn::cn;
 use crate::icon::{IconName, icon};
 use crate::{ButtonSize, ButtonVariant};
 
-const CONTENT: &str = "group/alert-dialog-content fixed top-[50%] left-[50%] z-50 grid w-full \
-    translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border border-border bg-background p-6 \
+const CONTENT: &str = "group/alert-dialog-content relative z-50 grid w-full \
+    gap-4 rounded-lg border border-border bg-background p-6 \
     shadow-lg text-base";
 
 /// How wide an alert dialog is: shadcn's `size`.
