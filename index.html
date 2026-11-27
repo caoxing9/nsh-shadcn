@@ -141,11 +141,10 @@ registry with the same variants, sizes and look, drawn with native views. It is 
 <a href="https://nsh.dev/docs/nshm">nshm</a>: one crate that Rust apps call and TSX apps import. Every component on
 this site is live: NSH's web build of the gallery, running in the page — press, type and open things.</p>
 <h2>Install</h2>
-<p>A Rust app adds the crate to its <code>Cargo.toml</code>:</p>
-<pre><code>[dependencies]
-nsh-shadcn = { git = "https://github.com/caoxing9/nsh-shadcn" }</code></pre>
+<p>A Rust app adds the crate:</p>
+<pre><code>cargo add nsh-shadcn</code></pre>
 <p>A TSX app (or any NSH app) installs it with the NSH CLI 0.7:</p>
-<pre><code>nsh add github:caoxing9/nsh-shadcn</code></pre>
+<pre><code>nsh add nsh-shadcn</code></pre>
 <h2>Use it from Rust</h2>
 <pre><code>${highlight(`use nsh_core::prelude::*;
 use nsh_shadcn::{self as ui, IconName};
