@@ -5,10 +5,12 @@ edition = "2024"
 license = "MIT"
 description = "shadcn/ui for NSH (Native Shell): the same components and the same look, in Rust, for Rust and TSX apps"
 repository = "https://github.com/caoxing9/nsh-shadcn"
+homepage = "https://caoxing9.github.io/nsh-shadcn/"
 readme = "README.md"
 keywords = ["nsh", "shadcn", "ui", "components", "nshm"]
 categories = ["gui"]
-exclude = ["/examples", "/tests", "/target", "/reference"]
+# The crate is the library: the gallery, tools, renders and screenshots stay in the repository.
+include = ["/src/**/*.rs", "/Cargo.toml", "/README.md", "/LICENSE", "/DESIGN.md"]
 
 [workspace]
 
