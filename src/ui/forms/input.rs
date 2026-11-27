@@ -43,6 +43,20 @@ pub(crate) const TEXTAREA: &str = "shrink flex min-h-16 w-full rounded-md border
     aria-invalid:border-destructive aria-invalid:ring-destructive/20 md:text-sm \
     dark:bg-input/30 dark:aria-invalid:ring-destructive/40";
 
+/// shadcn's Input look for an app's own field (as shadcn exports
+/// `buttonVariants` for its button's): an `input()` the app builds itself
+/// (its font, its events) draws as [`Input`] with
+/// `.app_class(Some(input_classes().into()))`.
+pub fn input_classes() -> &'static str {
+    INPUT
+}
+
+/// shadcn's Textarea look for an app's own multiline field, as
+/// [`input_classes`] is the Input's.
+pub fn textarea_classes() -> &'static str {
+    TEXTAREA
+}
+
 /// What an input holds: the HTML `type`s NSH's field can be.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PropEnum)]
 #[non_exhaustive]
