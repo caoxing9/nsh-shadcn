@@ -5,6 +5,9 @@ sizes and look, drawn with native views on macOS, iOS, Android, Windows, Linux a
 
 It is an [nshm](https://nsh.dev/docs/nshm.md): one Rust crate that a Rust app calls and a TSX app imports.
 
+**Live demo and docs: <https://caoxing9.github.io/nsh-shadcn/>**: every component running in the browser on NSH's web
+runtime, with how to use it.
+
 > Status: every component of shadcn/ui's new-york-v4 registry except `form` (it is react-hook-form), each checked
 > against shadcn's own rendering in light and dark. See [DESIGN.md](DESIGN.md) for how a component is ported and
 > verified, and each component's module doc for where NSH differs from the browser.
@@ -26,11 +29,19 @@ fn Toolbar() -> impl IntoElement {
 }
 ```
 
-## In a TSX app
+## Install
+
+```toml
+# Cargo.toml of a Rust app
+[dependencies]
+nsh-shadcn = { git = "https://github.com/caoxing9/nsh-shadcn" }
+```
 
 ```sh
-nsh add nsh-shadcn
+nsh add github:caoxing9/nsh-shadcn   # any NSH app, TSX included
 ```
+
+## In a TSX app
 
 ```tsx
 import { Button } from "nsh-shadcn";
@@ -54,6 +65,11 @@ import { Button } from "nsh-shadcn";
 collapsed-state tooltips, sub-menus, menu badges/actions or rail.
 
 Not ported: `form` (a react-hook-form wrapper; Field covers the layout).
+
+## The docs site
+
+`tools/site.sh` builds it in `site/`: the gallery's web build (`nsh package --target web`) and a page per component
+that runs it live. It needs an LLVM with wasm32 support on `PATH` (macOS: `brew install llvm`).
 
 ## License
 

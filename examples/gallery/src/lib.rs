@@ -1,10 +1,12 @@
 //! The nsh-shadcn gallery: a page per component, laid out as shadcn's docs
 //! show it, with a light / dark switch.
 //!
-//! Two storage keys pick what it opens (the screenshot tests set them with
-//! `open(".", { storage })`): `page`, a page's id (`"button"`), and `bare`
-//! (`"1"`): the page's 880 × 640 content area alone, without the sidebar, as
-//! `tools/reference/<page>.html` draws shadcn's.
+//! Storage keys pick what it opens (the screenshot tests set them with
+//! `open(".", { storage })`, the docs site in `localStorage` before it loads
+//! the web build): `page`, a page's id (`"button"`); `bare` (`"1"`): the
+//! page's content area alone, without the sidebar, as
+//! `tools/reference/<page>.html` draws shadcn's; `scheme` (`"light"` or
+//! `"dark"`): the appearance to start in.
 
 pub mod pages;
 
@@ -64,6 +66,8 @@ fn sidebar(selected: Signal<usize>) -> View {
         .child(scroll().flex_1().child(list))
 }
 
+/// The gallery's root: a sidebar of every page beside the selected page, or
+/// the page alone (`bare`).
 #[component]
 pub fn App() -> impl IntoElement {
     let all = pages::all();
@@ -71,6 +75,11 @@ pub fn App() -> impl IntoElement {
         .and_then(|id| all.iter().position(|p| p.id == id))
         .unwrap_or(0);
     let bare = Storage::get_item("bare").as_deref() == Some("1");
+    match Storage::get_item("scheme").as_deref() {
+        Some("dark") => set_color_scheme(Appearance::Dark),
+        Some("light") => set_color_scheme(Appearance::Light),
+        _ => {}
+    }
     let selected = signal(start);
     let page = move || {
         let all = pages::all();
