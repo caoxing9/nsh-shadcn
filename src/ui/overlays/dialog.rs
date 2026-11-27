@@ -17,6 +17,11 @@
 //!   content's `zoom-in-95`.
 //! - `max-w-[calc(100%-2rem)]`: NSH has no `calc()` in sizes; at the `sm:`
 //!   breakpoint and above (640 points) `sm:max-w-lg` takes its place anyway.
+//! - `fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]`: the
+//!   content is centered by a `fixed inset-0 flex items-center
+//!   justify-center p-4` box around it instead. NSH's translate moves what
+//!   is drawn, not the laid-out box that presses reach, so the lower half
+//!   of a dialog taller than half the window was drawn but not pressable.
 //! - The close button's `[&_svg]:…` size its icon: the icon takes `size-4`.
 //!   Its `data-[state=open]:…` classes never match in shadcn (Radix's
 //!   `Close` has no `data-state`) and are left out.
@@ -38,10 +43,19 @@ use crate::icon::{IconName, icon};
 /// shadcn's `DialogOverlay`.
 pub(crate) const OVERLAY: &str = "fixed inset-0 z-50 bg-black/50";
 
-/// shadcn's `DialogContent`, without its animation classes.
-const CONTENT: &str = "fixed top-[50%] left-[50%] z-50 grid w-full \
-    translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border border-border bg-background p-6 \
+/// shadcn's `DialogContent`, without its animation classes and centered
+/// by the modal's [`CENTER`] rather than by `fixed top-[50%] left-[50%]
+/// translate-x-[-50%] translate-y-[-50%]`.
+const CONTENT: &str = "relative z-50 grid w-full \
+    gap-4 rounded-lg border border-border bg-background p-6 \
     shadow-lg outline-none sm:max-w-lg text-base";
+
+/// What holds a dialog's content in the middle of the window, over the
+/// overlay. NSH's translate moves what is drawn, not the box that is laid
+/// out and pressed: shadcn's `translate-[-50%]` centering left the lower
+/// half of a dialog taller than half the window out of it, drawn but not
+/// pressable. A flex box centers the box itself.
+pub(crate) const CENTER: &str = "fixed inset-0 z-50 flex items-center justify-center p-4";
 
 /// The close button in the corner of `DialogContent` and `SheetContent`.
 pub(crate) const CLOSE: &str = "absolute top-4 right-4 rounded-xs opacity-70 \
@@ -88,7 +102,12 @@ pub(crate) fn modal(
                             }
                         }),
                 )
-                .child(content)
+                .child(
+                    view()
+                        .app_class(Some(SharedString::from(CENTER)))
+                        .pointer_events(PointerEvents::BoxNone)
+                        .child(content),
+                )
         },
     )
     .into_element()

@@ -60,6 +60,7 @@ pub use field::{
 };
 pub use input::{
     Input, InputElement, InputEvent, InputProps, InputType, Textarea, TextareaElement,
+    input_classes, textarea_classes,
 };
 pub use radio_group::{
     RadioGroup, RadioGroupElement, RadioGroupEvent, RadioGroupItem, RadioGroupItemElement,
